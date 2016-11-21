@@ -21,3 +21,14 @@ use:
 
 You can import all the classes underneath a directory by:
 `Import blaa.thing.*`
+
+
+### Dependency Injection
+
+Instead of adding a constructor with parameters, just use the inject annotation. The preprocessor will add the inject to an existing constructor.
+(So if you don't have anything happening in the constructor, make sure to leave an empty one so the preprocessor knows where to inject the new one. If you have other code in your constructor, it will remain after the preprocessor injected code. Only parameterless constructors can receive this auto injection code).
+`@inject(Router, EventAggregator)`
+will generate:
+`constructor(Router, EventAggregator) {`
+`   this.router = Router;`
+`   this.eventAggregator = EventAggregator;`
