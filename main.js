@@ -1,24 +1,20 @@
 var Through2 = require("through2");
 var Vinyl = require('vinyl');
+var injectEnhancement = require('./src/inject-enhancement');
 
-function transform() {
+function transform(file, enc, cb) {
+    return injectEnhancement.transform(file, enc, cb);
     console.log('transform');
 }
 
-function flush() {
+function flush(cb) {
     console.log('flushing');
+    cb();
 }
 
 function plugin() {
-    return Through2.obj(
-         function (file, enc, cb) {  //transform function -- called for each file
-            transform();
-        },
-        function (cb) { // flush function -- called at the end
-            flush();
-            cb();
-        }
-    )
+    /* Transform gets called for each file; flush gets called at the end. */
+    return Through2.obj(transform, flush);
 }
 
 module.exports = plugin;

@@ -2,56 +2,45 @@ var Through2 = require("through2");
 var Path = require('path');
 var utils = require('./utils');
 
-/**
- * this has a simple task -- anywhere it finds @classpath(components.tabs.Tab), it replaces it with
- * import {Tab} from '(relative pathness)/components/tabs/_classpath'
- * The idea is to use simple replacement. So the last word is assumed to be the classname, the
- *
- * the next step: TODO: make it able to import multiple classes from a classpath file.
- * @returns {*}
- */
-function plugin() {
+function transform (file, enc, cb) {  //transform function -- called for each file
+    var search = /@FullInject\(([^)]*)\)/g;
 
-    return Through2.obj(
-        function (file, enc, cb) {  //transform function -- called for each file
+    var constructor = ''
 
-            var search = /@FullInject\(([^)]*)\)/g;
+    file.contents = new Buffer(String(file.contents).replace(search, (match, p1) => {
 
-            var constructor = ''
+        constructor += `    constructor(${p1}) {\n`;
 
-            file.contents = new Buffer(String(file.contents).replace(search, (match, p1) => {
+        var items = p1.split(',');
 
-                constructor += `    constructor(${p1}) {\n`;
+        items.forEach(function (it) {
+            var include = it.trim();
 
-                var items = p1.split(',');
+            constructor += `        this.${utils.lowercaseFirstLetter(include)} = ${include};\n`;
+        });
 
-                items.forEach(function(it) {
-                    var include = it.trim();
+        constructor += `    }\n`;
 
-                    constructor += `        this.${utils.lowercaseFirstLetter(include)} = ${include};\n`;
-                });
+        return '@inject(' + p1 + ')';
+    }));
 
-                constructor += `    }\n`;
+    search = /@Constructor/g;
+    file.contents = new Buffer(String(file.contents).replace(search, (match, p1) => {
+        return constructor;
+    }));
 
-                return '@inject(' + p1 + ')';
-            }));
+    if (constructor) {
+        console.log(String(file.contents));
+    }
 
-            search = /@Constructor/g;
-            file.contents = new Buffer(String(file.contents).replace(search, (match, p1) => {
-                return constructor;
-            }));
-
-            if (constructor) {
-                console.log(String(file.contents));
-            }
-
-            cb(null, file)
-        }
-    )
+    cb(null, file)
 }
 
-module.exports = plugin
+function plugin() {
+    return Through2.obj(transform);
+}
 
-// function lowercaseFirstLetter(string) {
-//     return string.charAt(0).toLowerCase() + string.slice(1);
-// }
+module.exports = {
+    plugin: plugin,
+    transform: transform
+}
