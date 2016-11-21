@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/slackboxster/js-class-enhancements/issues"
   },
-  "homepage": "https://github.com/slackboxster/js-class-enhancements#readme"
+  "homepage": "https://github.com/slackboxster/js-class-enhancements#readme",
+  "dependencies": {
+    "through2": "^2.0.1",
+    "vinyl": "^2.0.1"
+  }
 }
