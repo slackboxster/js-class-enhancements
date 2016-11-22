@@ -1,14 +1,22 @@
 var Through2 = require("through2");
-var Vinyl = require('vinyl');
+
+var classpathBuilder = require('./src/classpath-builder');
 var injectEnhancement = require('./src/inject-enhancement');
+var importPreprocessor = require('./src/import-preprocessor');
+
+//TODO: figure out a way to keep this inside the classpathBuilder
+var moduleTree = { './': []}
 
 function transform(file, enc, cb) {
-    return injectEnhancement.transform(file, enc, cb);
-    console.log('transform');
+    file = classpathBuilder.transform(file, moduleTree)
+    file = injectEnhancement.transform(file)
+    file = importPreprocessor.transform(file)
+
+    cb(null, file)
 }
 
 function flush(cb) {
-    console.log('flushing');
+    classpathBuilder.flush(this, moduleTree)
     cb();
 }
 

@@ -1,8 +1,7 @@
-var Through2 = require("through2");
-var Path = require('path');
 var utils = require('./utils');
 
-function transform (file, enc, cb) {  //transform function -- called for each file
+function transform(file) {
+
     var search = /@FullInject\(([^)]*)\)/g;
 
     var constructor = ''
@@ -33,14 +32,9 @@ function transform (file, enc, cb) {  //transform function -- called for each fi
         console.log(String(file.contents));
     }
 
-    cb(null, file)
-}
-
-function plugin() {
-    return Through2.obj(transform);
+    return file
 }
 
 module.exports = {
-    plugin: plugin,
     transform: transform
 }
