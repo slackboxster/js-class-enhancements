@@ -2,13 +2,13 @@ var utils = require('./utils');
 
 function transform(file) {
 
-    var search = /@FullInject\(([^)]*)\)/g;
+    var search = /@inject\(([^)]*)\)/g;
 
     var constructor = ''
 
     file.contents = new Buffer(String(file.contents).replace(search, (match, p1) => {
 
-        constructor += `    constructor(${p1}) {\n`;
+        constructor += `constructor(${p1}) {\n`;
 
         var items = p1.split(',');
 
@@ -18,12 +18,12 @@ function transform(file) {
             constructor += `        this.${utils.lowercaseFirstLetter(include)} = ${include};\n`;
         });
 
-        constructor += `    }\n`;
+        // constructor += `    }\n`;
 
         return '@inject(' + p1 + ')';
     }));
 
-    search = /@Constructor/g;
+    search = /constructor\s*\(\s*\)\s*\{/g;
     file.contents = new Buffer(String(file.contents).replace(search, (match, p1) => {
         return constructor;
     }));
