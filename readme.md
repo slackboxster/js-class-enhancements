@@ -19,9 +19,12 @@ and add a pipeline step in your js build task:
 To replace a complicated import like:
 
 `import {Router} from '../../../blaa/thing/router.js'`
+
 use:
 
 `Import blaa.thing.router.Router`
+
+**Note** the capital `I` in `Import`... this is how the preprocessor distinguishes cool imports from lame imports. This could be made simpler in future by analyzing the structure of the import directive rather than looking at the first letter, but for now this is simpler from a code perspective. Definitely something a pull request could fix. :)
 
 In the future, you will be able to import all the classes underneath a directory by:
 
