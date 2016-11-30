@@ -1,6 +1,6 @@
 # Javascript dependency injection and packaging preprocessor.
 
-Using ESNext in an aurelia app is pretty great, but there is still some unnecessary boilerplate. This plugin gives some preprocessing methods to add to your gulp build process that clean up this boilerplate.
+Using ESNext in an aurelia app is pretty great, but there is still some unnecessary boilerplate. This plugin gives some preprocessing methods to add to your gulp build process that clean up this boilerplate. Also adds some cool import magic that makes importing other classes a little easier. :)
 
 ## Installation
 
