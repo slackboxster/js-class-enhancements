@@ -1,6 +1,6 @@
 {
   "name": "js-class-enhancements",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Provides a Java-style package based import system and enhanced dependency injection pre-processor.",
   "main": "main.js",
   "scripts": {
