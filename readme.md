@@ -4,7 +4,6 @@ Using ESNext in an aurelia app is pretty great, but there is still some unnecess
 
 ## Installation
 
-**TODO: publish to npm so that this is possible...**
 `npm install js-class-enhancements`
 
 add something like this to your gulp build:
