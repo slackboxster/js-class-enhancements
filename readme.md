@@ -1,26 +1,34 @@
 # Javascript dependency injection and packaging preprocessor.
 
-Using ESNext in an aurelia app is pretty great, but there is still some unnecessary boilerplate. This plugin gives some preprocessing methods to add to your gulp build process that clean up this boilerplate.
+Using ESNext in an aurelia app is pretty great, but there is still some unnecessary boilerplate. This plugin gives some preprocessing methods to add to your gulp build process that clean up this boilerplate. Also adds some cool import magic that makes importing other classes a little easier. :)
 
 ## Installation
 
 `npm install js-class-enhancements`
 
-add something like this to your gulp build:
+Import it into the file containing your gulp js build process:
+
 `var jsClassEnhancements = require('js-class-enhancements');`
-and:
+
+and add a pipeline step in your js build task:
+
 `.pipe(jsClassEnhancements())`
 
 ## Import Enhancements
 
 To replace a complicated import like:
+
 `import {Router} from '../../../blaa/thing/router.js'`
+
 use:
+
 `Import blaa.thing.router.Router`
 
-You can import all the classes underneath a directory by:
-`Import blaa.thing.*`
+**Note** the capital `I` in `Import`... this is how the preprocessor distinguishes cool imports from lame imports. This could be made simpler in future by analyzing the structure of the import directive rather than looking at the first letter, but for now this is simpler from a code perspective. Definitely something a pull request could fix. :)
 
+In the future, you will be able to import all the classes underneath a directory by:
+
+`Import blaa.thing.*`
 
 ## Dependency Injection
 
