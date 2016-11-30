@@ -3,7 +3,7 @@ var utils = require('./utils');
 
 function transform(file) {
 
-    var search = /Import\(([^)]*)\)/g;
+    var search = /Import \(.*$\)/g;
 
     file.contents = new Buffer(String(file.contents).replace(search, (match, p1) => {
 
