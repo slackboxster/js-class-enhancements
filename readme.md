@@ -6,9 +6,12 @@ Using ESNext in an aurelia app is pretty great, but there is still some unnecess
 
 `npm install js-class-enhancements`
 
-add something like this to your gulp build:
+Import it into the file containing your gulp js build process:
+
 `var jsClassEnhancements = require('js-class-enhancements');`
-and:
+
+and add a pipeline step in your js build task:
+
 `.pipe(jsClassEnhancements())`
 
 ## Import Enhancements
