@@ -23,10 +23,9 @@ use:
 
 `Import blaa.thing.router.Router`
 
-You can import all the classes underneath a directory by:
+In the future, you will be able to import all the classes underneath a directory by:
 
 `Import blaa.thing.*`
-
 
 ## Dependency Injection
 
